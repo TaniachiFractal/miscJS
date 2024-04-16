@@ -1,0 +1,30 @@
+﻿<html>
+
+<head>
+    <title>
+         Время дня
+    </title>
+    <script>
+        function main()
+        {
+            const red = 'rgb(200,0,0)';
+            const yellow = 'rgb(140,140,0)';
+            const blue = 'rgb(0,0,210)';
+            let currcolor = 'rgb(0,0,0)';
+            let now = new Date();
+            let hours = now.getHours();
+            if (hours > 21 && hours < 6) // night
+                currcolor = blue;
+            else if (hours >= 6 && hours < 12 || hours > 17 && hours <= 21) // eve mor
+                currcolor = red;
+            else // day
+                currcolor = yellow;
+            document.querySelector('h3').textContent = now;
+            document.querySelector('h3').style.color = currcolor;
+        }   
+    </script>
+</head>
+<body onload="main()">
+    <h3></h3>
+</body>
+</html>
