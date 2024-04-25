@@ -36,8 +36,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="shop.html" />
+    <Content Include="styles.css" />
     <Content Include="timeOfTheDay.html" />
     <Content Include="yourBrowser.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="shop_script.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
