@@ -24,27 +24,39 @@ class Product
     }
     addToCart()
     {
-        shoppingCart = shoppingCart.filter((element, index) => {
-            return shoppingCart.indexOf(element) === index;
-        });
+        deleteDuplicates();
         this.amount++;
         shoppingCart.push(this);
     }
     deleteFromCart()
     {
-        shoppingCart = shoppingCart.filter((element, index) => {
-            return shoppingCart.indexOf(element) === index;
-        });
-        shoppingCart.splice(shoppingCart.indexOf(this), 1);
+        this.amount-=1;
+        if (this.amount == 0) {
+            shoppingCart.splice(shoppingCart.indexOf(this), 1);
+        }
+        deleteDuplicates();
     }
 }
+
+function deleteDuplicates() {
+    var cart = shoppingCart;
+    for (var i = 0; i < shoppingCart.length; i++)
+    {
+        for (var j = 1; j < shoppingCart.length; j++)
+        {
+            if (shoppingCart[i].name == cart[j].name && cart) cart.splice(j, 1); 
+        }
+    }
+    shoppingCart = cart;
+}
+
 // Load the object list into the shop page
 function renderShop(productArr)
 {
     let shopField = document.querySelector("ul");
     shopField.innerHTML = '';
 
-    productArr.forEach((item, index) => {
+    productArr.forEach((item) => {
         let productLi = document.createElement('li');
 
         productLi.innerHTML = `
