@@ -1,5 +1,6 @@
 ﻿
 let shoppingCart = [];
+let compressedCart = [];
 
 function main() {
     let products = [
@@ -27,14 +28,13 @@ class Product
         deleteDuplicates();
         this.amount++;
         shoppingCart.push(this);
+        updCompressedCart();
     }
     deleteFromCart()
     {
         this.amount-=1;
-        if (this.amount == 0) {
-            shoppingCart.splice(shoppingCart.indexOf(this), 1);
-        }
         deleteDuplicates();
+        updCompressedCart();
     }
 }
 
@@ -42,9 +42,9 @@ function deleteDuplicates() {
     var cart = shoppingCart;
     for (var i = 0; i < shoppingCart.length; i++)
     {
-        for (var j = 1; j < shoppingCart.length; j++)
+        for (var j = i+1; j < shoppingCart.length; j++)
         {
-            if (shoppingCart[i].name == cart[j].name && cart) cart.splice(j, 1); 
+            if (shoppingCart[i].name == cart[j].name) cart.splice(j, 1); 
         }
     }
     shoppingCart = cart;
@@ -76,12 +76,21 @@ function renderShop(productArr)
     });
     
 }
+
+function updCompressedCart()
+{
+    shoppingCart.forEach((item) => {
+        if (compressedCart.indexOf(item)>-1)
+        compressedCart.push(item);
+    });
+}
+
 function renderCart()
 {
     let cartField = document.querySelector("ol");
     cartField.innerHTML = '';
 
-    shoppingCart.forEach((item, index) => {      
+    compressedCart.forEach((item) => {      
             let productLi = document.createElement('li');
 
             productLi.innerHTML = `
@@ -92,7 +101,7 @@ function renderCart()
             let btAddToCart = productLi.querySelector(".btRemoveFromCart");
             btAddToCart.addEventListener('click', () => {
                 item.deleteFromCart(shoppingCart);
-                renderCart(shoppingCart);
+                renderCart();
             });
 
             cartField.appendChild(productLi);
