@@ -1,4 +1,5 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 
 <head>
     <title>
@@ -6,13 +7,19 @@
     </title>
     <link rel="stylesheet" href="styles.css" media="all">
     <script src="shop_script.js"></script>
+    <style>
+        .shop{}
+        .cart{}
+        .fullCost{}
+    </style>
 </head>
 <body onload="main()">
     <!--SHOP-->
     <h2>Магазин</h2>
-    <ul></ul>
+    <ul class="shop"></ul>
     <!--CART-->
     <h2>Корзина</h2>
-    <ol></ol>
+    <div class="fullCost"></div>
+    <ol class="cart"></ol>
 </body>
 </html>

@@ -1,16 +1,19 @@
 ﻿
-let shoppingCart = [];
-let compressedCart = [];
+let products = [];
 
+// Init product list and render it
 function main() {
-    let products = [
+    
+    let productList = [
         new Product('Гречка', 200),
         new Product('Яблоки', 100),
         new Product('Телефон', 30000),
         new Product('Карандаш', 20),
         new Product('Салфетки', 66),
     ];
-    renderShop(products);
+    renderShop(productList);
+
+    products = productList;
 }
 
 // A product with name, price and amount
@@ -25,38 +28,23 @@ class Product
     }
     addToCart()
     {
-        deleteDuplicates();
         this.amount++;
-        shoppingCart.push(this);
-        updCompressedCart();
     }
     deleteFromCart()
     {
         this.amount-=1;
-        deleteDuplicates();
-        updCompressedCart();
     }
 }
 
-function deleteDuplicates() {
-    var cart = shoppingCart;
-    for (var i = 0; i < shoppingCart.length; i++)
-    {
-        for (var j = i+1; j < shoppingCart.length; j++)
-        {
-            if (shoppingCart[i].name == cart[j].name) cart.splice(j, 1); 
-        }
-    }
-    shoppingCart = cart;
-}
 
 // Load the object list into the shop page
 function renderShop(productArr)
 {
-    let shopField = document.querySelector("ul");
+    let shopField = document.querySelector(".shop");
     shopField.innerHTML = '';
 
     productArr.forEach((item) => {
+
         let productLi = document.createElement('li');
 
         productLi.innerHTML = `
@@ -67,7 +55,6 @@ function renderShop(productArr)
 
         let btAddToCart = productLi.querySelector(".btAddToCart");
         btAddToCart.addEventListener('click', () => {
-
             item.addToCart();
             renderCart();
         });
@@ -77,35 +64,53 @@ function renderShop(productArr)
     
 }
 
-function updCompressedCart()
+
+function countFullCost()
 {
-    shoppingCart.forEach((item) => {
-        if (compressedCart.indexOf(item)>-1)
-        compressedCart.push(item);
+    let output = 0
+    products.forEach((item) => {
+        output += item.price * item.amount;
     });
+    return output;
 }
 
+// Render the cart
 function renderCart()
 {
-    let cartField = document.querySelector("ol");
+    let cartField = document.querySelector(".cart");
     cartField.innerHTML = '';
+   
+    products.forEach((item) => {      
 
-    compressedCart.forEach((item) => {      
+        if (item.amount > 0) {
             let productLi = document.createElement('li');
 
             productLi.innerHTML = `
                <p>${item.name} ${item.price} руб. ${item.amount}</p>
                <button class="btRemoveFromCart">Удалить</button>
+               <button class="btAddToCart">Добавить</button>
         `;
 
-            let btAddToCart = productLi.querySelector(".btRemoveFromCart");
-            btAddToCart.addEventListener('click', () => {
-                item.deleteFromCart(shoppingCart);
+            let btRemoveFromCart = productLi.querySelector(".btRemoveFromCart");
+            btRemoveFromCart.addEventListener('click', () => {
+                item.deleteFromCart();
                 renderCart();
             });
 
+            let btAddToCart = productLi.querySelector(".btAddToCart");
+            btAddToCart.addEventListener('click', () => {
+                item.addToCart();
+                renderCart();
+            });
+
+
             cartField.appendChild(productLi);
-       
+        }
+             
         
     });
+
+    let fullCost = document.querySelector(".fullCost");
+    fullCost.innerHTML = `<h3>ИТОГО: ${countFullCost()} руб.`;
+
 }
