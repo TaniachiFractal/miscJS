@@ -36,13 +36,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="shop.html" />
-    <Content Include="styles.css" />
+    <Content Include="localstorage\localstorage.html" />
+    <Content Include="localstorage\localstorage.js" />
+    <Content Include="notes\notes.html" />
+    <Content Include="notes\notes.js" />
+    <Content Include="shop\shop.html" />
+    <Content Include="shop\styles.css" />
     <Content Include="timeOfTheDay.html" />
     <Content Include="yourBrowser.html" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="shop_script.js" />
+    <Content Include="shop\shop_script.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
